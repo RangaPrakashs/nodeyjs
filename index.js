@@ -20,6 +20,11 @@ let server = http.createServer(function(req, res) {
 
         //get the request method
         let method = req.method.toLowerCase();
+
+        //get the query object.
+        let querystr = parsedURL.query;
+
+
         
         //send response header
         res.writeHead(200, {
@@ -32,7 +37,7 @@ let server = http.createServer(function(req, res) {
 
         //log the request and method.
         console.log('Request recieved on path : ' + trimmedPath +
-            '\nWith method : ' + method);
+            '\nWith method : ' + method + '\nQuery Object : ', querystr);
     }
 });
 server.listen(3000, function() {
