@@ -14,34 +14,29 @@ let server = http.createServer( function( req, res ) {
 		let parsedURL = url.parse( req.url, true );
 		//get the url path
 		let path = parsedURL.pathname;
-		let trimmedPath = path.replace(/^\/+|\/+$/g, '' );
+		let trimmedPath = path.replace( /^\/+|\/+$/g, '' );
 		//get the request method
 		let method = req.method.toLowerCase();
 		//get the query object.
 		let querystr = parsedURL.query;
 		//get the payloads
 		let decoder = new StringDecoder( 'utf-8' );
-        let buffer = '';
-        //Write data of the request as payload as utf-8
-
-
-		req.on( 'data', function( data ){ 
+		let buffer = '';
+		//Write data of the request as payload as utf-8
+		req.on( 'data', function( data ) {
 			buffer += decoder.write( data );
-        });
-        
-        //end method on 
+		} );
+		//end method on 
 		req.on( 'end', function() {
 			buffer += decoder.end();
 			//send response header
 			res.writeHead( 200, {
 				'Content-type': 'text/plain'
-            } );
-            
+			} );
 			///send response on end of the request.
 			res.end( 'Hello World!\n' );
-			console.log( "Request was recieved : " + buffer );
-        } );
-        
+			console.log( "Payload was recieved : " +buffer );
+		} );
 		//log the request and method.
 	}
 } );
